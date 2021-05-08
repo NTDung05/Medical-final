@@ -61,7 +61,7 @@ public class Bill_activity extends AppCompatActivity {
         Database database = new Database(this,"QLNhaThuoc",null,1);
 
         database = new Database(this, "QLNhaThuoc", null, 1);
-        database.QueryData("INSERT INTO HoaDon VALUES(null, '" + 1 + "',' " + t1.getMaNT() + "')");
+      //  database.QueryData("INSERT INTO HoaDon VALUES(null, '" + 1 + "',' " + t1.getMaNT() + "')");
         //database.QueryData("INSERT INTO HoaDon VALUES(null, '" + 13 + "',' " + t1.getMaNT() + "')");
 
         listBill = new ArrayList<>();

@@ -54,14 +54,21 @@ public class billDetail_activity extends AppCompatActivity {
         Database database = new Database(this,"QLNhaThuoc",null,1);
 
 //        database.QueryData("INSERT INTO CTHoaDon VALUES(1, '" + listThuoc.get(1) +"',' "+ 10 + "')");
+        Cursor dataHD = database.GetData("SELECT * FROM HoaDon Where MaHD = " + bill.getMaHD());
         Cursor dataCT = database.GetData("SELECT * FROM CTHoaDon Where MaHD = " + bill.getMaHD());
-
+        while (dataHD.moveToNext()) {
+            int maHD = dataHD.getInt(0);
+            int ngay = dataHD.getInt(1);
+            int maNT = dataHD.getInt(2);
+        }
         while (dataCT.moveToNext()) {
             int maHD = dataCT.getInt(0);
-            int soLuong = dataCT.getInt(1);
-            int maNT = dataCT.getInt(2);
-            billDetail d1 = new billDetail(1, 10, 2);
-            listDetail.add(d1);
+            int mthuoc = dataCT.getInt(1);
+            int soLuong = dataCT.getInt(2);
+
+            billDetail d = new billDetail(maHD,soLuong,mthuoc);
+
+            listDetail.add(d);
         }
         setControl();
         setEvent();

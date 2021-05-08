@@ -2,6 +2,7 @@ package com.example.medical;
 
 import android.app.Application;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,7 +39,7 @@ public class add_bill_activity extends AppCompatActivity {
     private List<billDetail> details = new ArrayList<>();
     private List<ChartThuoc> chartThuoc = new ArrayList<>();
     Thuoc thuoc;
-
+    Database database;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_bill);
@@ -48,15 +50,15 @@ public class add_bill_activity extends AppCompatActivity {
             Log.d("Lỗi", "Bmm");
         }
 
-        Database database = new Database(this, "QLNhaThuoc", null, 1);
+         database = new Database(this, "QLNhaThuoc", null, 1);
+    //    database.QueryData("INSERT INTO HoaDon VALUES(null, '" + 1 + "',' " + t1 + "')");
 
-        //database.QueryData("INSERT INTO CTHoaDon VALUES(1, '" + listThuoc.get(1) +"',' "+ 10 + "')");
         db = new dataBase_Thuoc(this);
         listThuoc = db.getAllThuoc();
 
         System.out.println("lelele" + listThuoc.get(0).getTenThuoc());
-        //   Database database = new Database(this,"QLNhaThuoc",null,1);
-        //   database.QueryData("INSERT INTO CTHoaDon VALUES(null, '" + 1 + "',' " + t1.getMaNT() + "')");
+
+
 
         setControl();
         setAdapter();
@@ -91,6 +93,29 @@ public class add_bill_activity extends AppCompatActivity {
 
             }
         });
+        lvchitiet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println(chartThuoc.get(position).getSoLuong());
+                edSoluong.setText(String.valueOf(chartThuoc.get(position).getSoLuong()));
+
+               for(int i =0 ; i< listThuoc.size(); i++){
+                  if(listThuoc.get(i).getMaThuoc() == chartThuoc.get(position).getMaThuoc()){
+                      spinner_thuoc.setSelection(i);
+                   }
+                }
+                ChartThuoc ch = chartThuoc.get(position);
+
+                btXoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chartThuoc.remove(ch);
+                        setAdapterlv();
+                    }
+                });
+            }
+        });
+
         btXacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,10 +140,7 @@ public class add_bill_activity extends AppCompatActivity {
                 }
 
                 setAdapterlv();
-                billDetail d = new billDetail();
-                d.setSoLuong(chart.getSoLuong());
-                d.setMaThuoc(chart.getMaThuoc());
-                details.add(d);
+
 
             }
         });
@@ -126,14 +148,28 @@ public class add_bill_activity extends AppCompatActivity {
         btHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Bill_activity.class);
+                database.QueryData("");
+                Intent intent = new Intent(getApplicationContext(), all_list_bill.class);
                 startActivity(intent);
             }
         });
         btLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                add();
+               // add();
+                database.QueryData("INSERT INTO HoaDon VALUES(null, '" + edNgay.getText().toString() + "',' " + t1 + "')");
+
+                Cursor c = database.GetData("select Max(MaHD) from HoaDon");
+                c.moveToNext();
+                System.out.println(c.getString(0));
+                int m = c.getInt(0);
+                for(int i =0;i < chartThuoc.size();i++){
+                    String uery = String.format("INSERT INTO CTHoaDon VALUES(%d,%d,%d)",m,chartThuoc.get(i).getMaThuoc(),chartThuoc.get(i).getSoLuong());
+                    database.QueryData(uery);
+                }
+                Toast.makeText(getApplicationContext(), "Lưu Thành Công", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), Bill_activity.class);
+                startActivity(intent);
             }
         });
     }
@@ -145,16 +181,14 @@ public class add_bill_activity extends AppCompatActivity {
         }
     }
 
-    private void add() {
-        int n = details.size();
-
-        for (int i = 0; i < n; i++) {
-            billDetail detail = new billDetail();
-            detail = details.get(i);
-
-//        db1.adddetail(detail);
-        }
-    }
+//    private void add() {
+//
+//
+//        for (int i = 0; i < chartThuoc.size(); i++) {
+//            database.QueryData("INSERT INTO CTHoaDon VALUES(null, '" + + "',' " + chartThuoc.get(i).getSoLuong() + "')");
+//
+//        }
+//    }
 
     private void setAdapterlv() {
         if (customAdapter == null) {
