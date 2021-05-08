@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NhaThuoc_activity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Nhấn chọn một nhà thuốc để xem danh sách hóa đơn" />
+    <ListView
+        android:layout_marginTop="20dp"
+        android:id="@+id/lvNhaThuoc_bill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

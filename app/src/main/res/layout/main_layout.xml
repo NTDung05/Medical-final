@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/btNhathuoc"
+                    android:src="@drawable/building"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nhà Thuốc"
+                    style="?attr/materialButtonOutlinedStyle"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="50dp">
+                    <ImageButton
+                        android:id="@+id/btThuoc"
+                        android:src="@drawable/drugicon"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:background="@color/white"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Thuốc"
+                        style="?attr/materialButtonOutlinedStyle"/>
+            </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/btHoadon"
+                            android:src="@drawable/billicon"
+                            android:scaleType="fitCenter"
+                            android:adjustViewBounds="true"
+                            android:background="@color/white"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Hóa Đơn"
+                            style="?attr/materialButtonOutlinedStyle"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="50dp">
+
+                    <ImageButton
+                        android:id="@+id/btThongke"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/charticon" />
+
+                    <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Thống Kê"
+                            style="?attr/materialButtonOutlinedStyle"/>
+                </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

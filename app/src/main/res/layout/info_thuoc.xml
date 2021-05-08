@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<EditText
+    android:id="@+id/edTenthuoc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:hint="Nhập Tên Thuốc"
+/>
+    <EditText
+        android:id="@+id/edDVT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Nhập Đơn Vị Tính"
+
+        android:layout_below="@+id/edTenthuoc"
+        android:layout_marginTop="20dp"/>
+    <EditText
+        android:id="@+id/edDongia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="Nhập Đơn giá cho thuốc"
+
+        android:layout_below="@+id/edDVT"
+        android:layout_marginTop="20dp"/>
+
+    <ImageButton
+        android:id="@+id/btUphinhanh"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/edDongia"
+        android:background="@android:drawable/ic_menu_gallery"
+        android:text="Tải ảnh"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/tvsrc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btUphinhanh"
+        android:layout_alignBottom="@+id/btUphinhanh"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/edDongia"
+        android:text="File hình ảnh"/>
+    <LinearLayout
+        android:id="@+id/lbBt"
+        android:layout_below="@+id/btUphinhanh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+           android:id="@+id/btThem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"/>
+        <Button
+            android:id="@+id/btSua"
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh Sửa"
+           />
+        <Button
+            android:id="@+id/btXoa"
+            android:layout_marginLeft="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xóa"
+            />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lvThuoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbBt"
+        android:layout_marginTop="30dp"/>
+</RelativeLayout>
