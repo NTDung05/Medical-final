@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medical.Custom.ChartAdapter;
@@ -39,14 +41,19 @@ public class add_bill_activity extends AppCompatActivity {
     private List<billDetail> details = new ArrayList<>();
     private List<ChartThuoc> chartThuoc = new ArrayList<>();
     Thuoc thuoc;
+    NhaThuoc nhaThuoc;
     Database database;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_bill);
+        ActionBar actionBar = getSupportActionBar();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent myintent = getIntent();
         Bundle bundle = myintent.getExtras();
         if (bundle != null) {
             t1 = bundle.getInt("n1");
+            nhaThuoc =(NhaThuoc) bundle.getSerializable("nhathuoc");
             Log.d("Lỗi", "Bmm");
         }
 
@@ -65,7 +72,16 @@ public class add_bill_activity extends AppCompatActivity {
         setEvent();
 
     }
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void setControl() {
         edNgay = (EditText) findViewById(R.id.edNgay);
         edSoluong = (EditText) findViewById(R.id.edsoluong);
@@ -119,6 +135,17 @@ public class add_bill_activity extends AppCompatActivity {
         btXacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    Integer.parseInt(String.valueOf(edSoluong.getText()));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Nhập lại số lượng", Toast.LENGTH_LONG).show();
+                }
+                try {
+                    Integer.parseInt(String.valueOf(edNgay.getText()));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Nhập lại Ngày", Toast.LENGTH_LONG).show();
+                }
+
                 System.out.println("3 " + thuoc.getTenThuoc());
 
 
@@ -157,6 +184,16 @@ public class add_bill_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // add();
+                try {
+                    Integer.parseInt(String.valueOf(edSoluong.getText()));
+                } catch (NumberFormatException e) {
+                   Toast.makeText(getApplicationContext(), "Nhập lại số lượng", Toast.LENGTH_LONG).show();
+                }
+                try {
+                    Integer.parseInt(String.valueOf(edNgay.getText()));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Nhập lại Ngày", Toast.LENGTH_LONG).show();
+                }
                 database.QueryData("INSERT INTO HoaDon VALUES(null, '" + edNgay.getText().toString() + "',' " + t1 + "')");
 
                 Cursor c = database.GetData("select Max(MaHD) from HoaDon");
@@ -169,6 +206,9 @@ public class add_bill_activity extends AppCompatActivity {
                 }
                 Toast.makeText(getApplicationContext(), "Lưu Thành Công", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), Bill_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("n1", nhaThuoc);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

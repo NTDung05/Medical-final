@@ -12,7 +12,13 @@ public class NhaThuoc implements Serializable {
         this.tenNT = tenNT;
         this.diaChi = diaChi;
     }
-
+    public boolean equals(Object o){
+        if(o instanceof NhaThuoc){
+            NhaThuoc p = (NhaThuoc) o;
+            return this.maNT==p.getMaNT();
+        } else
+            return false;
+    }
     public NhaThuoc() {
     }
 

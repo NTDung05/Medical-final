@@ -54,9 +54,9 @@ public class customListview_Bill extends ArrayAdapter<Bill> {
             viewHolder = (customListview_Bill.ViewHolder) convertView.getTag();
         }
         Bill bill = listBill.get(position);
-        viewHolder.tvMaHD.setText(String.valueOf(bill.getMaHD()));
-        viewHolder.tvTenNT.setText(nhathuoc);
-        viewHolder.tvNgay.setText(bill.getDate());
+        viewHolder.tvMaHD.setText("Mã HĐ");
+        viewHolder.tvTenNT.setText(String.valueOf(bill.getMaHD()));
+        viewHolder.tvNgay.setText("Ngày Lập"+bill.getDate());
 //        viewHolder.tvDongia.setText(thuoc.getDonGia());
 //        viewHolder.imgThuoc.setImageResource(Integer.parseInt(thuoc.getImg()));
 //        Bitmap bitmap = BitmapFactory.decodeByteArray(thuoc.getImg(),0,thuoc.getImg().length);

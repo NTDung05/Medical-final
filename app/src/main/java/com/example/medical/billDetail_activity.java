@@ -94,7 +94,7 @@ public class billDetail_activity extends AppCompatActivity {
 
     private void setAdapter() {
         if (adapter == null) {
-            adapter = new custom_list_detail(this, R.layout.custom_list_detail, listDetail);
+            adapter = new custom_list_detail(this, R.layout.custom_list_detail, listDetail, listThuoc);
             lvBilldetail.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();

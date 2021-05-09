@@ -126,6 +126,7 @@ public class Bill_activity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), add_bill_activity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("n1", t1.getMaNT());
+        bundle.putSerializable("nhathuoc", t1);
         intent.putExtras(bundle);
         startActivity(intent);
     }
