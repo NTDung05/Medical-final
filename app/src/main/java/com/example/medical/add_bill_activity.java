@@ -1,6 +1,5 @@
 package com.example.medical;
 
-import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,13 +17,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medical.Custom.ChartAdapter;
-import com.example.medical.Custom.customListview_Thuoc;
 import com.example.medical.Custom.custom_spinner;
-import com.example.medical.Data.*;
-import com.example.medical.model.*;
+import com.example.medical.Data.Database;
+import com.example.medical.Data.dataBase_Thuoc;
+import com.example.medical.model.ChartThuoc;
+import com.example.medical.model.NhaThuoc;
+import com.example.medical.model.Thuoc;
+import com.example.medical.model.billDetail;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class add_bill_activity extends AppCompatActivity {
@@ -175,8 +176,10 @@ public class add_bill_activity extends AppCompatActivity {
         btHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.QueryData("");
-                Intent intent = new Intent(getApplicationContext(), all_list_bill.class);
+                Intent intent = new Intent(getApplicationContext(), Bill_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("n1", nhaThuoc);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

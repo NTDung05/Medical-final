@@ -1,57 +1,36 @@
 package com.example.medical;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medical.Custom.ChartAdapter;
-import com.example.medical.Custom.NhaThuocAdapter;
-import com.example.medical.Custom.customListview_Thuoc;
 import com.example.medical.Data.Database;
 import com.example.medical.Data.dataBase_Thuoc;
 import com.example.medical.model.ChartThuoc;
-import com.example.medical.model.NhaThuoc;
 import com.example.medical.model.Thuoc;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class Chart_activity extends AppCompatActivity {
-    ImageView edImg;
     ListView lvThuoc;
     private ChartAdapter customAdapter;
     private List<Thuoc> listThuoc;
     private List<ChartThuoc> listChartThuoc;
     dataBase_Thuoc db;
+    Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,25 +43,50 @@ public class Chart_activity extends AppCompatActivity {
         db = new dataBase_Thuoc(this);
         listThuoc = db.getAllThuoc();
         listChartThuoc = new ArrayList<>();
-        Random generator = new Random();
-        for (Thuoc i : listThuoc){
-            listChartThuoc.add(new ChartThuoc(i.getMaThuoc(),i.getTenThuoc(),i.getDVT(),i.getDonGia(),i.getImg(),generator.nextInt(100)));
+        database = new Database(this,"QLNhaThuoc",null,1);
+
+        for (Thuoc i : listThuoc) {
+            Cursor data = database.GetData("SELECT SUM(SoLuong) FROM CTHoaDon WHERE MaThuoc = " + i.getMaThuoc() + " GROUP BY MaThuoc");
+            int soLuong = 0;
+            while (data.moveToNext()) {
+                soLuong = data.getInt(0);
+                System.out.println(soLuong);
+            }
+            listChartThuoc.add(new ChartThuoc(i.getMaThuoc(), i.getTenThuoc(), i.getDVT(), i.getDonGia(), i.getImg(), soLuong));
         }
 
-        Collections.sort(listChartThuoc, new Comparator<ChartThuoc>() {
-            @Override
-            public int compare(ChartThuoc sv1, ChartThuoc sv2) {
-                if (sv1.getSoLuong() < sv2.getSoLuong()) {
-                    return 1;
-                } else {
-                    if (sv1.getSoLuong() == sv2.getSoLuong()) {
-                        return 0;
-                    } else {
-                        return -1;
-                    }
-                }
-            }
-        });
+//        Collections.sort(listChartThuoc, new Comparator<ChartThuoc>() {
+//            @Override
+//            public int compare(ChartThuoc sv1, ChartThuoc sv2) {
+//                if (sv1.getSoLuong() < sv2.getSoLuong()) {
+//                    return 1;
+//                } else {
+//                    if (sv1.getSoLuong() == sv2.getSoLuong()) {
+//                        return 0;
+//                    } else {
+//                        return -1;
+//                    }
+//                }
+//            }
+//        });
+
+        PieChart pieChart = findViewById(R.id.pieChart);
+        ArrayList<PieEntry> dsThuoc = new ArrayList<>();
+        for (ChartThuoc i : listChartThuoc) {
+            dsThuoc.add(new PieEntry(i.getSoLuong(), i.getTenThuoc()));
+        }
+
+        PieDataSet pieDataSet = new PieDataSet(dsThuoc, "THUOC");
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
+
+        PieData pieData = new PieData(pieDataSet);
+
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("THUOC");
+        pieChart.animate();
 
         setControl();
         setAdapter();

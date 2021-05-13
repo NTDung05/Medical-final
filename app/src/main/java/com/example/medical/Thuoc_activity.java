@@ -1,46 +1,32 @@
 package com.example.medical;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.medical.Custom.NhaThuocAdapter;
 import com.example.medical.Custom.customListview_Thuoc;
-import com.example.medical.Data.Database;
 import com.example.medical.Data.dataBase_Thuoc;
-import com.example.medical.model.NhaThuoc;
 import com.example.medical.model.Thuoc;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Thuoc_activity extends AppCompatActivity {
@@ -140,9 +126,7 @@ public class Thuoc_activity extends AppCompatActivity {
             public void onClick(View v) {
                 db.deleteThuoc(maThuoc);
                 updateList();
-                btXoa.setEnabled(false);
-                btThem.setEnabled(true);
-                btSua.setEnabled(false);
+
             }
         });
         btUpfile.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +156,7 @@ public class Thuoc_activity extends AppCompatActivity {
                 } else {
                     updateList();
                 }
-                btThem.setEnabled(true);
-                btSua.setEnabled(false);
+
             }
         });
     }
