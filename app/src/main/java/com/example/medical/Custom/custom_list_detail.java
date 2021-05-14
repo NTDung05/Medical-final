@@ -14,7 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.medical.R;
-import com.example.medical.model.*;
+import com.example.medical.model.Thuoc;
+import com.example.medical.model.billDetail;
 
 import java.util.List;
 
@@ -54,14 +55,14 @@ public class custom_list_detail extends ArrayAdapter<billDetail> {
         viewHolder.tvStt.setText(String.valueOf(position + 1));
         viewHolder.tvMathuoc.setText("Mã Thuốc: "+String.valueOf(detail.getMaThuoc()));
         viewHolder.tvSoluong.setText(String.valueOf("Số lượng: " + detail.getSoLuong()));
-        for( int i =0 ; i<= thuoc.size(); i++) {
-            if (detail.getMaThuoc() == thuoc.get(position).getMaThuoc()) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(thuoc.get(position).getImg(), 0, thuoc.get(position).getImg().length);
-                viewHolder.imgThuoc.setImageBitmap(bitmap);
-                viewHolder.tvThuoc.setText(String.valueOf(thuoc.get(position).getTenThuoc()));
-            }
-        }
+              for(int i =0; i < thuoc.size(); i++) {
+                  if(detail.getMaThuoc() == thuoc.get(i).getMaThuoc()) {
+                      viewHolder.tvThuoc.setText(String.valueOf(thuoc.get(i).getTenThuoc()));
+                      Bitmap bitmap = BitmapFactory.decodeByteArray(thuoc.get(i).getImg(), 0, thuoc.get(i).getImg().length);
+                      viewHolder.imgThuoc.setImageBitmap(bitmap);
 
+                  }
+              }
         return convertView;
     }
 

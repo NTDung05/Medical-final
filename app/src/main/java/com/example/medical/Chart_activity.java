@@ -1,9 +1,9 @@
 package com.example.medical;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
@@ -22,6 +22,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Chart_activity extends AppCompatActivity {
@@ -39,11 +41,11 @@ public class Chart_activity extends AppCompatActivity {
         actionBar.setTitle("Thông tin Thuốc");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.chart_thuoc);
+        setContentView(R.layout.pie_chart);
         db = new dataBase_Thuoc(this);
         listThuoc = db.getAllThuoc();
         listChartThuoc = new ArrayList<>();
-        database = new Database(this,"QLNhaThuoc",null,1);
+        database = new Database(this, "QLNhaThuoc", null, 1);
 
         for (Thuoc i : listThuoc) {
             Cursor data = database.GetData("SELECT SUM(SoLuong) FROM CTHoaDon WHERE MaThuoc = " + i.getMaThuoc() + " GROUP BY MaThuoc");
@@ -55,20 +57,20 @@ public class Chart_activity extends AppCompatActivity {
             listChartThuoc.add(new ChartThuoc(i.getMaThuoc(), i.getTenThuoc(), i.getDVT(), i.getDonGia(), i.getImg(), soLuong));
         }
 
-//        Collections.sort(listChartThuoc, new Comparator<ChartThuoc>() {
-//            @Override
-//            public int compare(ChartThuoc sv1, ChartThuoc sv2) {
-//                if (sv1.getSoLuong() < sv2.getSoLuong()) {
-//                    return 1;
-//                } else {
-//                    if (sv1.getSoLuong() == sv2.getSoLuong()) {
-//                        return 0;
-//                    } else {
-//                        return -1;
-//                    }
-//                }
-//            }
-//        });
+        Collections.sort(listChartThuoc, new Comparator<ChartThuoc>() {
+            @Override
+            public int compare(ChartThuoc sv1, ChartThuoc sv2) {
+                if (sv1.getSoLuong() < sv2.getSoLuong()) {
+                    return 1;
+                } else {
+                    if (sv1.getSoLuong() == sv2.getSoLuong()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
+            }
+        });
 
         PieChart pieChart = findViewById(R.id.pieChart);
         ArrayList<PieEntry> dsThuoc = new ArrayList<>();
@@ -87,24 +89,25 @@ public class Chart_activity extends AppCompatActivity {
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("THUOC");
         pieChart.animate();
-
-        setControl();
-        setAdapter();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                break;
+        if (item.getItemId() == R.id.menuAdd) {
+            thongKe();
+        }
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressLint("WrongViewCast")
+    private void thongKe() {
+        setContentView(R.layout.chart_thuoc);
+        setControl();
+        setAdapter();
+    }
+
     private void setControl() {
         lvThuoc = (ListView) findViewById(R.id.lvThuoc);
     }
@@ -117,5 +120,11 @@ public class Chart_activity extends AppCompatActivity {
             customAdapter.notifyDataSetChanged();
             lvThuoc.setSelection(customAdapter.getCount() - 1);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_nha_thuoc, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

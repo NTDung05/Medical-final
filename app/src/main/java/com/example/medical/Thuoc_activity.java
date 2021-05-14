@@ -115,9 +115,7 @@ public class Thuoc_activity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(listThuoc.get(position).getImg(), 0, listThuoc.get(position).getImg().length);
                 edImg.setImageBitmap(bitmap);
                 maThuoc = listThuoc.get(position).getMaThuoc();
-                btThem.setEnabled(true);
-                btSua.setEnabled(true);
-                btXoa.setEnabled(true);
+
             }
         });
 
@@ -126,9 +124,7 @@ public class Thuoc_activity extends AppCompatActivity {
             public void onClick(View v) {
                 db.deleteThuoc(maThuoc);
                 updateList();
-                btXoa.setEnabled(false);
-                btThem.setEnabled(true);
-                btSua.setEnabled(false);
+
             }
         });
         btUpfile.setOnClickListener(new View.OnClickListener() {
@@ -158,8 +154,7 @@ public class Thuoc_activity extends AppCompatActivity {
                 } else {
                     updateList();
                 }
-                btThem.setEnabled(true);
-                btSua.setEnabled(false);
+
             }
         });
     }
