@@ -2,13 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<EditText
-    android:id="@+id/edTenthuoc"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/edTenthuoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    android:hint="Nhập Tên Thuốc"
-/>
+        android:hint="Nhập Tên Thuốc"
+        />
     <EditText
         android:id="@+id/edDVT"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
 
         android:hint="Nhập Đơn giá cho thuốc"
-
+        android:inputType="number"
         android:layout_below="@+id/edDVT"
         android:layout_marginTop="20dp"/>
 
@@ -54,14 +54,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
+        <Button
+            android:id="@+id/btThem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"/>
         <Button
             android:id="@+id/btSua"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chỉnh Sửa"
-           />
+            />
         <Button
             android:id="@+id/btXoa"
             android:layout_marginLeft="45dp"
